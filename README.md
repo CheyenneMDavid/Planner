@@ -1,31 +1,18 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Welcome to "Far East Takeaway"
 
-Welcome CheyenneMDavid,
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+Far East Takeaway is situated in Canterbury town center, which has a CT1 postcode.
+Deliveries within the CT1 area are free.  Deliveries to the surrounding
+postcodes of CT2, CT3 & CT4 are charged a £5.00 delivery fee.
 
-## Reminders
+It is a small business which is known for its undending limited menu, that focuses on delivering the very best quality.
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+Customers who order their food from Far East, are not looking for generically cooked food
 
-## Creating the Heroku app
+Customers can select between a choice of 4 meals of:
+* Set Meal For 1 Person
+* Set Meal For 2 Person
+* Set Meal For 3 Person
+* Set Meal For 4 Person
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
-
-1. `heroku/python`
-2. `heroku/nodejs`
-
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
-
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
-
-Connect your GitHub repository and deploy as normal.
-
-## Constraints
-
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
-
------
-Happy coding!
+Customers can order any variations of these meals but only within the context of the available menu.

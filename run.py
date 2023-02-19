@@ -30,13 +30,6 @@ SET_MEAL_FOR_FOUR = 42.80
 
 
 
-"""
-The takeaway is situated in Canterbury town center, which has a CT1 postcode.
-Deliveries within the CT1 area are free.  Deliveries to the surrounding
-postcodes of CT2, CT3 & CT4 are charged a £5.00 delivery fee.
-"""
-
-
 
 
 printSet Meal For 1 Person
