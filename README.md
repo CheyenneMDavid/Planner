@@ -9,7 +9,7 @@ It is a small business which is known for its undending limited menu, that focus
 
 Customers who order their food from Far East, are not looking for generically cooked food
 
-**Customers can select between a choice of 4 meals of:**
+## **Customers can select between a choice of 4 meals of:**
 		
 ### Set Meal For 1 Person	£8.50
 
