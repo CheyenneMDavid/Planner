@@ -14,3 +14,14 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("far_east_takeaway")
 
+
+"""
+This is the opening screen of the terminal, which greets the user, reminding
+them that the "Happy Customer always returns", both English and also cantonese
+reminding the user to convey an authnticity
+"""
+print("           ======================================")
+print("                    快樂的客戶將永遠回來")
+print("           Welcome to Far East Takeaway Terminal")
+print("                 Happy Customer always returns!")
+print("           ======================================")
