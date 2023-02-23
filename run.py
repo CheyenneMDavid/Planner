@@ -27,11 +27,6 @@ print("                  Happy Customer always returns!\n")
 print("                ======================================\n\n")
 
 
-"""
-Read Google sheet as a CSV fil in the root of application
-"""
-
-
 def user_name_terminal():
     """
     Request input for a single-word username with no spaces or special
