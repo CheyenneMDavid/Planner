@@ -15,72 +15,72 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("far_east")
 
 
-# """
-# This is the opening screen of the terminal, which greets the user, reminding
-# them that the "Happy Customer always returns", both English and also cantonese
-# reminding the user to always convey an authnticity
-# """
-# print("                ======================================\n")
-# print("                        快樂的客戶將永遠回來\n")
-# print("                Welcome to Far East Takeaway Terminal\n")
-# print("                  Happy Customer always returns!\n")
-# print("                ======================================\n\n")
+"""
+This is the opening screen of the terminal, which greets the user, reminding
+them that the "Happy Customer always returns", both English and also cantonese
+reminding the user to always convey an authnticity
+"""
+print("                ======================================\n")
+print("                        快樂的客戶將永遠回來\n")
+print("                Welcome to Far East Takeaway Terminal\n")
+print("                  Happy Customer always returns!\n")
+print("                ======================================\n\n")
 
 
-# """
-# Read Google sheet as a CSV fil in the root of application
-# """
+"""
+Read Google sheet as a CSV fil in the root of application
+"""
 
 
-# def user_name_terminal():
-#     """
-#     Request input for a single-word username with no spaces or special
-#     characters.
-#     The request will loop until the input is valid.
-#     Change the username's first letter to capital.
-#     When a valid user name is entered, the user is addressed by that name.
-#     """
-#     print("Enter a valid single-word username that only consists of" "letters.")
+def user_name_terminal():
+    """
+    Request input for a single-word username with no spaces or special
+    characters.
+    The request will loop until the input is valid.
+    Change the username's first letter to capital.
+    When a valid user name is entered, the user is addressed by that name.
+    """
+    print("Enter a valid single-word username that only consists of" "letters.")
 
-#     print("Spaces and special characters are not allowed.\n")
+    print("Spaces and special characters are not allowed.\n")
 
-#     while True:
-#         username = input("Enter your username: ")
+    while True:
+        username = input("Enter your username: ")
 
-#         if not username.isalpha() or " " in username:
-#             print(
-#                 "Please input a username that only consists of letters and"
-#                 "has no spaces."
-#             )
-#         else:
-#             print("Welcome, " + username.capitalize() + "!")
-#             return True
-
-
-# def get_valid_number(num):
-#     """
-#     Validate user input as a UK phone number, using imported regex module.
-#     While loop requesting input until input is valid.
-#     The Regex string does have short falls of coverage, but appears to be the
-#     most comprehensive when using Python as a stand alone program
-#     """
-#     pattern = re.compile(
-#         r"^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|"
-#         r"((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|"
-#         r"((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"
-#     )
-
-#     return pattern.match(num)
-#     print(num)
+        if not username.isalpha() or " " in username:
+            print(
+                "Please input a username that only consists of letters and"
+                "has no spaces."
+            )
+        else:
+            print("Welcome, " + username.capitalize() + "!")
+            return True
 
 
-# while True:
-#     num = input("Please enter a valid UK phone number: \n")
-#     if get_valid_number(num):
-#         print("Phone number is valid")
-#         break
-#     else:
-#         print("Invalid phone number")
+def get_valid_number(num):
+    """
+    Validate user input as a UK phone number, using imported regex module.
+    While loop requesting input until input is valid.
+    The Regex string does have short falls of coverage, but appears to be the
+    most comprehensive when using Python as a stand alone program
+    """
+    pattern = re.compile(
+        r"^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|"
+        r"((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|"
+        r"((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"
+    )
+
+    return pattern.match(num)
+    print(num)
+
+
+while True:
+    num = input("Please enter a valid UK phone number: \n")
+    if get_valid_number(num):
+        print("Phone number is valid")
+        break
+    else:
+        print("Invalid phone number")
 
 
 def customer_check():
@@ -89,10 +89,10 @@ def customer_check():
     """
     df = pd.read_csv("far_east.csv")
 
-    print(df[["Phone number:"]])
+    print(df[["Phone number"]])
 
 
 # Area in which functions are called
-# user_name_terminal()
-# get_valid_number(num)
+user_name_terminal()
+get_valid_number(num)
 customer_check()
