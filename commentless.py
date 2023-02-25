@@ -23,13 +23,7 @@ print("                ======================================\n\n")
 
 
 def user_name_terminal():
-    """
-    Request input for a single-word username with no spaces or special
-    characters.
-    The request will loop until the input is valid.
-    Change the username's first letter to capital.
-    When a valid user name is entered, the user is addressed by that name.
-    """
+
     print("Enter a valid single-word username that only consists of" "letters.")
 
     print("Spaces and special characters are not allowed.\n")
