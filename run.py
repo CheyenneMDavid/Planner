@@ -18,13 +18,18 @@ SHEET = GSPREAD_CLIENT.open("far_east")
 """
 This is the opening screen of the terminal, which greets the user, reminding
 them that the "Happy Customer always returns", both English and also cantonese
-reminding the user to always convey an authenticity
+reminding the user to always convey an authnticity
 """
 print("                ======================================\n")
 print("                        快樂的客戶將永遠回來\n")
 print("                Welcome to Far East Takeaway Terminal\n")
 print("                  Happy Customer always returns!\n")
 print("                ======================================\n\n")
+
+
+"""
+Read Google sheet as a CSV fil in the root of application
+"""
 
 
 def user_name_terminal():
@@ -52,7 +57,7 @@ def user_name_terminal():
             return True
 
 
-def validate_number(num):
+def get_valid_number(num):
     """
     Validate user input as a UK phone number, using imported regex module.
     While loop requesting input until input is valid.
@@ -66,33 +71,28 @@ def validate_number(num):
     )
 
     return pattern.match(num)
-
     print(num)
 
 
 while True:
     num = input("Please enter a valid UK phone number: \n")
-    if validate_number(num):
+    if get_valid_number(num):
         print("Phone number is valid")
         break
     else:
         print("Invalid phone number")
 
-print(f"The number you input was{num}")
 
-
-def number_search():
+def customer_check():
     """
-    Look for match in CSV file, Phone number column, using validated phone
-    phone number from validate_number function.
+    Check dataframe for matching phone number
     """
     df = pd.read_csv("far_east.csv")
 
-    #
     print(df[["Phone number"]])
 
 
-# Area in which functions are called:
+# Area in which functions are called
 user_name_terminal()
-validate_number(num)
-number_search()
+get_valid_number(num)
+customer_check()
