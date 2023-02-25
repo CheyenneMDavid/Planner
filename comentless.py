@@ -33,15 +33,15 @@ def user_name_terminal():
 
         if not username.isalpha() or " " in username:
             print(
-                "Please input a username that only consists of letters and"
+                "Please input a username that only consists of letters and "
                 "has no spaces."
             )
         else:
             print("Welcome, " + username.capitalize() + "!")
-            return True
+            return username
 
 
-def get_valid_number(num):
+def get_valid_number():
 
     pattern = re.compile(
         r"^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|"
@@ -49,17 +49,13 @@ def get_valid_number(num):
         r"((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"
     )
 
-    return pattern.match(num)
-    print(num)
-
-
-while True:
-    num = input("Please enter a valid UK phone number: \n")
-    if get_valid_number(num):
-        print("Phone number is valid")
-        break
-    else:
-        print("Invalid phone number")
+    while True:
+        num = input("Please enter a valid UK phone number: \n")
+        if pattern.match(num):
+            print(f"Thank you, {num} is a valid phone number")
+            return num
+        else:
+            print(f"{num} is an invalid phone number")
 
 
 def customer_check():
@@ -70,6 +66,6 @@ def customer_check():
 
 
 # Area in which functions are called
-user_name_terminal()
-get_valid_number(num)
+username = user_name_terminal()
+phone_number = get_valid_number()
 customer_check()
