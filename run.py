@@ -15,7 +15,7 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("far_east")
 
 """
-This is the opening screen of the terminal, which greets the user, reminding
+Opening screen of the terminal, which greets the user, reminding
 them that the "Happy Customer always returns", both English and also cantonese
 reminding the user to always convey an authenticity
 """
@@ -31,8 +31,10 @@ def user_name_terminal():
     """
     Request input for a single-word username with no spaces or special
     characters. The request will loop until the input is valid.
-    Change the username's first letter to capital.
-    When a valid user name is entered, the user is addressed by that name.
+    When a valid user name is entered, the username's first letter
+    is changed to a capital and returned to greet the user.
+    This function is outside the main function which loops and runs everything
+    else.
     """
     print("Enter a valid single-word username")
     print("Username must only consists of letters.")
@@ -47,7 +49,7 @@ def user_name_terminal():
             )
         else:
             print("Welcome, " + username.capitalize() + "!")
-            return username
+            break
 
 
 def get_valid_number():
@@ -89,11 +91,68 @@ def customer_check(num):
     if not result.empty:
         print("Current customer")
     else:
-        print("New customer. \n")
-        print("Enter new customer details. \n")
+        print("This is a new customer. \n")
+        print("New Customer file being started. \n")
+    return num
+
+
+def new_customer_details(num):
+    """
+    Request user input, new customer details of first name, last name,
+    first line of address and postcode.
+    Validate postcode using RegEx.  Loop request for valid postcode till
+    valid postcode is entered.
+    Create a new row in the far_east.csv file with the entered details.
+    """
+    # Read the phonenumber as a string.
+    df = pd.read_csv("far_east.csv", dtype={"Phone number": str})
+
+    # Request user to enter the customer details.
+    first_name = input("Enter customer first name: ")
+    last_name = input("Enter customer last name: ")
+    address = input("Enter first line of customer address: ")
+
+    # Loop until the user enters a valid postcode
+    while True:
+        postcode = input("Enter customer postcode: ")
+        postcode_pattern = re.compile(
+            r"^[A-Za-z]{1,2}\d{1,2}[A-Za-z]?\s?\d[A-Za-z]{2}$"
+        )
+        if not postcode_pattern.match(postcode):
+            print("Invalid postcode format")
+        else:
+            # Break out of loop, when valid postcode is entered.
+            break
+
+    # Change first letters of names to capital letters.
+    first_name = first_name.capitalize()
+    last_name = last_name.capitalize()
+
+    # Change postcode to uppercase.
+    postcode = postcode.upper()
+
+    # Dictionary for details to be added to csv file.
+    new_customer = {
+        "Phone number": num,
+        "First name": [first_name],
+        "Last name": [last_name],
+        "First line of address": [address],
+        "Postcode": [postcode],
+    }
+
+    new_df = pd.DataFrame(new_customer)
+
+    # Combine the new dataframe with the old dataframe.
+    df = pd.concat([df, new_df], ignore_index=True)
+
+    # Save the updated DataFrame to the CSV file
+    df.to_csv("far_east.csv", index=False)
+
+    print("New customer added to file.")
 
 
 # Area in which functions are called
 username = user_name_terminal()
-phone_number = get_valid_number()
-customer_check(phone_number)
+num = get_valid_number()
+num = customer_check(num)
+new_customer_details(num)
