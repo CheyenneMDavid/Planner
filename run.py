@@ -1,3 +1,4 @@
+from datetime import date
 import datetime
 import re
 import pandas as pd
@@ -12,7 +13,7 @@ SCOPE = [
 CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open("Cupcakes")
+SHEET = GSPREAD_CLIENT.open("CakesRUs")
 
 """
 Opening screen of the terminal greets user with the "We Print You Wear"
@@ -20,7 +21,7 @@ company name.
 """
 
 print("                ===================================\n")
-print("                      Welcome to Cupcakes 2 U \n")
+print("                      Welcome to Cakes R Us \n")
 print("                Happy Cake Customer always returns!\n")
 print("                ===================================\n\n")
 
@@ -79,15 +80,22 @@ def customer_check(num):
     Remove the preceeding "0", in order for it to be matched against the Phone
     numbers column in the CSV, which doesn't store preceeding Zeros, without
     extra jiggery-pokery in the settings of google sheets.
+    If a match is found, the customer first name, last name and phone number
+    are displayed.  After the order function is then called.
+    If no match is found, the new_customer_details function is called.
     """
-    df = pd.read_csv("far_east.csv", dtype={"Phone number": str})
+    df = pd.read_csv("cakes.csv", dtype={"Phone number": str})
 
     if num.startswith("0"):
         num = num[1:]
 
     result = df[df["Phone number"].str.endswith(num)]
     if not result.empty:
-        print("Current customer")
+        print("Current customer deails:")
+        print(
+            result[["First name", "Last name", "Phone number"]].to_string(index=False)
+        )
+        cake_order(num)
     else:
         print("This is a new customer. \n")
         print("New Customer file being started. \n")
@@ -106,7 +114,7 @@ def new_customer_details(num):
     Save updated df to csv file.
     """
 
-    df = pd.read_csv("far_east.csv", dtype={"Phone number": str})
+    df = pd.read_csv("cakes.csv", dtype={"Phone number": str})
 
     first_name = input("Enter customer first name: ")
     last_name = input("Enter customer last name: ")
@@ -135,52 +143,42 @@ def new_customer_details(num):
 
     new_df = pd.DataFrame(new_customer)
     df = pd.concat([df, new_df], ignore_index=True)
-    df.to_csv("far_east.csv", index=False)
+    df.to_csv("cakes.csv", index=False)
 
-    print("New customer added to file.")
+    print("New customer details recorded. \n \n")
 
 
-def calculate_cupcake_order():
+def cake_order(num):
     """
-    Creates a dictionary called "cupcakes" of available cupcakes and their
-    prices.
-    Create an empty dictionary called "order" adding the type and number of
-    cupcakes the customer wants, added into it as the cupcakes dictionary
-    is iterated over, asking the user to input howmany of each type is wanted.
-    total_cost is is calculated by types and amounts and then addthe postage.
-    Finally, print order details.
-
+    Requests input from user, for cake customer wishes to order
     """
-    cupcakes = {
-        "strawberry_shortcake": 2.50,
-        "lemon_cupcakes": 2.50,
-        "ultimate_nutella": 3.00,
-        "chocolate_peanut_butter_frosting": 4.50,
-        "coconut_cupcakes": 3.00,
-        "oreo_cupcakes": 3.10,
-        "salted_caramel_cupcakes": 3.10,
-        "red_velvet_splodge": 4.00,
-    }
+    print("Cakes available to order: \n")
+    print("New Baby Girl, cost £35.00")
+    print("New Baby Boy, cost £35.00")
+    print("18th Birthday, cost £35.00")
+    print("Wedding, £70 \n")
 
-    order = {}
-    for cupcake_type in cupcakes:
-        quantity = int(input("How many of the {} cupcakes? ".format(cupcake_type)))
-        order[cupcake_type] = quantity
+    cakes = {"girl": 35, "boy": 35, "18": 35, "wedding": 70}
 
-    total_cost = sum(
-        quantity * cupcakes[cupcake_type] for cupcake_type, quantity in order.items()
-    )
-    total_cost += 10
+    while True:
+        cake_choice = input("What type of cake does the customer want? \n")
+        if cake_choice in cakes:
+            cost = cakes[cake_choice]
+            cake_type = cake_choice.capitalize()
+            order_date = date.today().strftime("%d-%m-%Y")
+            break
+        else:
+            print("Invalid input, please choose a valid cake.")
 
-    print("\nOrder Details:")
-    for cupcake_type, quantity in order.items():
-        print(
-            "- {} x {} = £{:.2f}".format(
-                quantity, cupcake_type, quantity * cupcakes[cupcake_type]
-            )
-        )
-    print("Postage = £10.00")
-    print("Total Cost = £{:.2f}".format(total_cost))
+    df = pd.read_csv("cakes.csv", dtype={"Phone number": str})
+    df.loc[df["Phone number"] == num, "Cake type"] = cake_type
+    df.loc[df["Phone number"] == num, "Order date"] = order_date
+    df.loc[df["Phone number"] == num, "Cost"] = cost
+    df.to_csv("cakes.csv", index=False)
+
+    print("Order details recorded. \n \n")
+
+    customer_check(num)
 
 
 # Area in which functions are called
@@ -188,4 +186,4 @@ username = user_name_terminal()
 num = get_valid_number()
 num = customer_check(num)
 new_customer_details(num)
-calculate_cupcake_order()
+cake_order(num)
