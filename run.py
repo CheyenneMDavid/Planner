@@ -12,19 +12,17 @@ SCOPE = [
 CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open("far_east")
+SHEET = GSPREAD_CLIENT.open("Cupcakes")
 
 """
-Opening screen of the terminal, which greets the user, reminding
-them that the "Happy Customer always returns", both English and also cantonese
-reminding the user to always convey an authenticity
+Opening screen of the terminal greets user with the "We Print You Wear"
+company name.
 """
 
-print("                ======================================\n")
-print("                        快樂的客戶將永遠回來\n")
-print("                Welcome to Far East Takeaway Terminal\n")
-print("                  Happy Customer always returns!\n")
-print("                ======================================\n\n")
+print("                ===================================\n")
+print("                      Welcome to Cupcakes 2 U \n")
+print("                Happy Cake Customer always returns!\n")
+print("                ===================================\n\n")
 
 
 def user_name_terminal():
@@ -101,18 +99,19 @@ def new_customer_details(num):
     Request user input, new customer details of first name, last name,
     first line of address and postcode.
     Validate postcode using RegEx.  Loop request for valid postcode till
-    valid postcode is entered.
-    Create a new row in the far_east.csv file with the entered details.
+    valid postcode is entered and then break out of loop.
+    Capitalize first and last names and change postcode to uppercase.
+    Create new dictionary called "new_customer", use it to make a new
+    dataframe and then use the new dataframe to update the old df.
+    Save updated df to csv file.
     """
-    # Read the phonenumber as a string.
+
     df = pd.read_csv("far_east.csv", dtype={"Phone number": str})
 
-    # Request user to enter the customer details.
     first_name = input("Enter customer first name: ")
     last_name = input("Enter customer last name: ")
     address = input("Enter first line of customer address: ")
 
-    # Loop until the user enters a valid postcode
     while True:
         postcode = input("Enter customer postcode: ")
         postcode_pattern = re.compile(
@@ -121,17 +120,11 @@ def new_customer_details(num):
         if not postcode_pattern.match(postcode):
             print("Invalid postcode format")
         else:
-            # Break out of loop, when valid postcode is entered.
             break
 
-    # Change first letters of names to capital letters.
     first_name = first_name.capitalize()
     last_name = last_name.capitalize()
-
-    # Change postcode to uppercase.
     postcode = postcode.upper()
-
-    # Dictionary for details to be added to csv file.
     new_customer = {
         "Phone number": num,
         "First name": [first_name],
@@ -141,14 +134,53 @@ def new_customer_details(num):
     }
 
     new_df = pd.DataFrame(new_customer)
-
-    # Combine the new dataframe with the old dataframe.
     df = pd.concat([df, new_df], ignore_index=True)
-
-    # Save the updated DataFrame to the CSV file
     df.to_csv("far_east.csv", index=False)
 
     print("New customer added to file.")
+
+
+def calculate_cupcake_order():
+    """
+    Creates a dictionary called "cupcakes" of available cupcakes and their
+    prices.
+    Create an empty dictionary called "order" adding the type and number of
+    cupcakes the customer wants, added into it as the cupcakes dictionary
+    is iterated over, asking the user to input howmany of each type is wanted.
+    total_cost is is calculated by types and amounts and then addthe postage.
+    Finally, print order details.
+
+    """
+    cupcakes = {
+        "strawberry_shortcake": 2.50,
+        "lemon_cupcakes": 2.50,
+        "ultimate_nutella": 3.00,
+        "chocolate_peanut_butter_frosting": 4.50,
+        "coconut_cupcakes": 3.00,
+        "oreo_cupcakes": 3.10,
+        "salted_caramel_cupcakes": 3.10,
+        "red_velvet_splodge": 4.00,
+    }
+
+    order = {}
+    for cupcake_type in cupcakes:
+        quantity = int(input("How many of the {} cupcakes? ".format(cupcake_type)))
+        order[cupcake_type] = quantity
+
+    total_cost = sum(
+        quantity * cupcakes[cupcake_type] for cupcake_type, quantity in order.items()
+    )
+    total_cost += 10
+
+    print("\nOrder Details:")
+    for cupcake_type, quantity in order.items():
+        print(
+            "- {} x {} = £{:.2f}".format(
+                quantity, cupcake_type, quantity * cupcakes[cupcake_type]
+            )
+        )
+    print("Postage = £10.00")
+    print("Total Cost = £{:.2f}".format(total_cost))
 
 
 # Area in which functions are called
@@ -156,3 +188,4 @@ username = user_name_terminal()
 num = get_valid_number()
 num = customer_check(num)
 new_customer_details(num)
+calculate_cupcake_order()

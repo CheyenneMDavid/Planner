@@ -25,5 +25,6 @@
    "editor.defaultFormatter": "HookyQR.beautify",
    "[python]": {
       "editor.defaultFormatter": "ms-python.black-formatter"
-   }
+   },
+   "python.formatting.provider": "autopep8"
 }
