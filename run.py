@@ -16,7 +16,7 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("CakesRUs")
 
 """
-Opening screen of the terminal greets user with the "We Print You Wear"
+Opening screen of the terminal greets user with the "Cakes RUs"
 company name.
 """
 
