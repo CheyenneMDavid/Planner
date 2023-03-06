@@ -40,21 +40,26 @@ def get_user_name():
     """
     Request input for a single-word username with no spaces or special
     characters.
+    Request input for a single-word username with no spaces or special
+    characters. The request will loop until input is valid.
+    When a valid user name is entered, the username's first letter
+    is changed to a capital and returned to greet the user.
     """
-    print("Enter a valid single-word as your username")
-    print(
-        "Usernames must only consist of letters and not more than 10"
-        "characters long"
-    )
-    print("Spaces and special characters are not allowed.")
-    print("Example:  'Dave' \n")
+    print("Enter a valid single-word username")
+    print("Username must only consists of letters.")
+    print("Spaces and special characters are not allowed.\n")
+    while True:
+        username = input("Enter your username: \n")
 
-    username = input("Enter your username: ")
-    if not username.isalpha() or " " in username:
-        print(f"{username} is not a valid username")
-        print("Please enter a username without spaces or special characters")
-    else:
-        print("Welcome, " + username.capitalize() + "!")
+        if not username.isalpha() or " " in username:
+            print(f"{username} is not a valid username.")
+            print(
+                "Usernames must be a single word, consisting only of letters."
+                "Example: 'Trudie' or 'Dave': \n"
+            )
+        else:
+            print("Welcome, " + username.capitalize() + "!")
+            break
 
 
 get_user_name()

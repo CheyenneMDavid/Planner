@@ -93,7 +93,9 @@ def customer_check(num):
     if not result.empty:
         print("Current customer deails:")
         print(
-            result[["First name", "Last name", "Phone number"]].to_string(index=False)
+            result[["First name", "Last name", "Phone number"]].to_string(
+                index=False
+            )
         )
         cake_order(num)
     else:
