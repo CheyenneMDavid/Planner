@@ -178,12 +178,31 @@ def cake_order(num):
 
     print("Order details recorded. \n \n")
 
-    customer_check(num)
+
+def update_file(num, cost, cake_type, order_date):
+
+    d_f = pd.read_csv("cakes.csv", dtype={"Phone number": str})
+    d_f.loc[d_f["Phone number"] == num, "Cake type"] = cake_type.capitalize()
+    d_f.loc[d_f["Phone number"] == num, "Order date"] = order_date
+    d_f.loc[d_f["Phone number"] == num, "Cost"] = cost
+    d_f.to_csv("cakes.csv", index=False)
+
+    print("Order details recorded. \n \n")
 
 
-# Area in which functions are called
+def main():
+    """
+    Run all functions
+    """
+    num = get_valid_number()
+    num = customer_check(num)
+    new_customer_details(num)
+    cake_order(num)
+
+
 username = user_name_terminal()
-num = get_valid_number()
-num = customer_check(num)
-new_customer_details(num)
-cake_order(num)
+"""
+Function called outside main function, so that it only runs once, upon
+starting the program.
+"""
+main()
