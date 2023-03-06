@@ -1,3 +1,4 @@
+import re
 import pandas as pd
 import gspread
 from google.oauth2.service_account import (
@@ -62,4 +63,29 @@ def get_user_name():
             break
 
 
+def get_valid_number():
+    """
+    Request for user input of a valid UK phone number. Validate with RegEx
+    pattern which will contine to loop until a valid input it entered.
+    """
+    # The Regex pattern for this code is from the StackOverflow site, here:
+    # https://stackoverflow.com/questions/11518035/regular-expression-for-
+    # gb-based-and-only-numeric-phone-number
+    pattern = re.compile(
+        r"^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|"
+        r"((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|"
+        r"((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"
+    )
+
+    while True:
+        num = input("Please enter a valid UK phone number: \n")
+        if pattern.match(num):
+            print(f"Thank you, {num} is a valid phone number")
+            return num
+        else:
+            print(f"{num} is an invalid phone number")
+
+
 get_user_name()
+
+get_valid_number()
