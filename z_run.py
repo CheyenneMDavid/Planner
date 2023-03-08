@@ -90,8 +90,9 @@ def get_valid_first_name():
     """
     Requests user input and uses RegEx to validate.  Pattern allows for upper
     and lowercase letters, hyphens and apostrophies.
-    Split username at the hyphen into two seperate names, capitalize then and
-    join them again
+    PProcess is looped with an "invalid entry" statement until input is valid.
+    If present, names are split at the hyphen into two seperate names,
+    capitalized and then joined again.
     """
     pattern = re.compile(
         r"^[A-Za-z][A-Za-z'-]+[a-z](,? [A-Z][A-Za-z'-]+[a-z])*$"
@@ -105,9 +106,7 @@ def get_valid_first_name():
         "When entering customer's name, hyphens and apostrophes are allowed,"
         "but spaces are not. \n"
     )
-
     while True:
-
         first_name = input("Please enter customer's first name: \n")
         if pattern.match(first_name):
             parts = first_name.split("-")
@@ -117,10 +116,41 @@ def get_valid_first_name():
             print(capitalized_first_name)
             return
         else:
-            print(f"{capitalized_first_name} is not a valid first name")
+            print(f"{first_name} is not a valid first name")
 
 
-# get_user_name()
+def get_valid_last_name():
+    """
+    Requests user input and uses RegEx to validate.  Pattern allows for upper
+    and lowercase letters, hyphens and apostrophies.
+    Process is looped with an "invalid entry" statement until input is valid.
+    If present, names are split at the apostraphe into two seperate names,
+    capitalized and then joined again.
+    """
+    pattern = re.compile(
+        r"^[A-Za-z][A-Za-z'-]+[a-z](,? [A-Z][A-Za-z'-]+[a-z])*$"
+    )
+    # The Regex pattern for this code is from the StackOverflow site, here:
+    # https://stackoverflow.com/questions/39895282/improving-the-below-regex-
+    # for-us-and-uk-names
+    # I changed it and tested the change her: https://regexr.com/
 
-# get_valid_number()
+    while True:
+
+        last_name = input("Please enter customer's last name: \n")
+        if pattern.match(last_name):
+            parts = last_name.split("'")
+            parts = [part.capitalize() for part in parts]
+            capitalized_last_name = "'".join(parts)
+            print(f"{last_name} is a valid name")
+            print(capitalized_last_name)
+            return
+        else:
+            print(f"{last_name} is not a valid first name")
+
+
+get_user_name()
+
+get_valid_number()
 get_valid_first_name()
+get_valid_last_name()
