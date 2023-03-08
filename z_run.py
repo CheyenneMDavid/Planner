@@ -90,6 +90,8 @@ def get_valid_first_name():
     """
     Requests user input and uses RegEx to validate.  Pattern allows for upper
     and lowercase letters, hyphens and apostrophies.
+    Split username at the hyphen into two seperate names, capitalize then and
+    join them again
     """
     pattern = re.compile(
         r"^[A-Za-z][A-Za-z'-]+[a-z](,? [A-Z][A-Za-z'-]+[a-z])*$"
@@ -108,10 +110,14 @@ def get_valid_first_name():
 
         first_name = input("Please enter customer's first name: \n")
         if pattern.match(first_name):
+            parts = first_name.split("-")
+            parts = [part.capitalize() for part in parts]
+            capitalized_first_name = "-".join(parts)
             print(f"{first_name} is a valid name")
-            return first_name
+            print(capitalized_first_name)
+            return
         else:
-            print(f"{first_name} is not a valid first name")
+            print(f"{capitalized_first_name} is not a valid first name")
 
 
 # get_user_name()
