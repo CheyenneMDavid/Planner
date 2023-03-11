@@ -29,7 +29,7 @@ df = pd.read_csv("cakes.csv")
 """
 Opening screen of the terminal greets user with the "Cakes RUs"
 company name.
-"""
+# """
 
 print("                ===================================\n")
 print("                      Welcome to Cakes R Us \n")
@@ -86,13 +86,16 @@ def get_valid_number():
             print(f"{num} is an invalid phone number")
 
 
-def get_valid_first_name():
+def get_valid_name():
     """
-    Requests user input and uses RegEx to validate.  Pattern allows for upper
-    and lowercase letters, hyphens and apostrophies.
-    PProcess is looped with an "invalid entry" statement until input is valid.
-    If present, names are split at the hyphen into two seperate names,
-    capitalized and then joined again.
+    Same functionvalidates both first name and last name.
+    Requests user input of name (first or last) validates using RegEx string
+    which allows for uppercase, lowercase, hyphens and apostrophes.
+    Names are split at hyphens and apostrophes, the individual names are
+    capitalized and then names are joined again.
+    Result is "betty-boo" would become "Betty-Boo" and "o'brien" would
+    would become "O'Brien".
+    Both requests will loop until valid input is submitted.
     """
     pattern = re.compile(
         r"^[A-Za-z][A-Za-z'-]+[a-z](,? [A-Z][A-Za-z'-]+[a-z])*$"
@@ -101,56 +104,39 @@ def get_valid_first_name():
     # https://stackoverflow.com/questions/39895282/improving-the-below-regex-
     # for-us-and-uk-names
     # I changed it and tested the change her: https://regexr.com/
-
     print(
         "When entering customer's name, hyphens and apostrophes are allowed,"
         "but spaces are not. \n"
     )
+
     while True:
         first_name = input("Please enter customer's first name: \n")
         if pattern.match(first_name):
             parts = first_name.split("-")
             parts = [part.capitalize() for part in parts]
             capitalized_first_name = "-".join(parts)
-            print(f"{first_name} is a valid name")
             print(capitalized_first_name)
-            return
+            break
         else:
-            print(f"{first_name} is not a valid first name")
-
-
-def get_valid_last_name():
-    """
-    Requests user input and uses RegEx to validate.  Pattern allows for upper
-    and lowercase letters, hyphens and apostrophies.
-    Process is looped with an "invalid entry" statement until input is valid.
-    If present, names are split at the apostraphe into two seperate names,
-    capitalized and then joined again.
-    """
-    pattern = re.compile(
-        r"^[A-Za-z][A-Za-z'-]+[a-z](,? [A-Z][A-Za-z'-]+[a-z])*$"
-    )
-    # The Regex pattern for this code is from the StackOverflow site, here:
-    # https://stackoverflow.com/questions/39895282/improving-the-below-regex-
-    # for-us-and-uk-names
-    # I changed it and tested the change her: https://regexr.com/
+            print(f"{first_name} is NOT a valid first name")
 
     while True:
-
         last_name = input("Please enter customer's last name: \n")
         if pattern.match(last_name):
             parts = last_name.split("'")
             parts = [part.capitalize() for part in parts]
             capitalized_last_name = "'".join(parts)
-            print(f"{last_name} is a valid name")
             print(capitalized_last_name)
-            return
+
+            break
         else:
-            print(f"{last_name} is not a valid first name")
+            print(f"{last_name} is NOT a valid last name")
+
+    return capitalized_first_name, capitalized_last_name
 
 
 get_user_name()
 
+
 get_valid_number()
-get_valid_first_name()
-get_valid_last_name()
+first_name, last_name = get_valid_name()
