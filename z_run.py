@@ -31,10 +31,10 @@ Opening screen of the terminal greets user with the "Cakes RUs"
 company name.
 # """
 
-print("                ===================================\n")
-print("                      Welcome to Cakes R Us \n")
-print("                Happy Cake Customer always return!!\n")
-print("                ===================================\n\n")
+# print("                ===================================\n")
+# print("                      Welcome to Cakes R Us \n")
+# print("                Happy Cake Customer always return!!\n")
+# print("                ===================================\n\n")
 
 
 def get_user_name():
@@ -135,8 +135,39 @@ def get_valid_name():
     return capitalized_first_name, capitalized_last_name
 
 
-get_user_name()
+def address_topline():
+    """
+    Request input from user, requesting entry of first line of address.
+    Use Regex pattern to validate input.  The pattern allows a match using
+    "flat", flat number and a letter.  For example: Flat 5b.
+    Then, house number, street name, and allows for endings such as
+    "drive, close, st, rd", with whitespaces where needed most.
+    It's not perfect, but sufficient to avoid complexity.
+    Loop until input is valid.
+    """
+    # The Regex pattern for this code is from the StackOverflow site, here:
+
+    pattern = re.compile(
+        r"^(?:flat)?\s*\d*[,_]?\s*\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*"
+    )
+    while True:
+        address = input("enter first line of address: \n")
+        if pattern.match(address):
+            print("Pass")
+            break
+        else:
+            print("Fail")
+
+    # def main():
+    # """
+    # Runs main functions
+    # """
 
 
-get_valid_number()
-first_name, last_name = get_valid_name()
+# get_valid_number()
+# first_name, last_name = get_valid_name()
+
+address_topline()
+
+# get_user_name()
+# main()

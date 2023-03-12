@@ -201,7 +201,7 @@ def main():
     cake_order(num)
 
 
-username = user_name_terminal()
+# username = user_name_terminal()
 """
 Function called outside main function, so that it only runs once, upon
 starting the program.
