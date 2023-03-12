@@ -164,20 +164,36 @@ def validate_address():
     return address.title()
 
 
-# def validate_postcode():
+def validate_postcode():
+
+    """
+    Request user input for postcode.  Validation by Regex pattern
+    Loop request till input is valid
+    """
+    pattern = re.compile(r"^[A-Za-z]{1,2}\d{1,2}[A-Za-z]?\s?\d[A-Za-z]{2}$")
+
+    while True:
+        postcode = input("Please enter a valid postcode \n")
+        if pattern.match(postcode):
+            print(postcode.upper())
+
+            break
+        else:
+            print(f"{postcode} is an invalid format.")
+
+    return postcode.upper()
 
 
-# def main():
-# """
-# Runs main functions
-# """
+def main():
+    """
+    Runs main functions
+    """
+
+    get_valid_number()
+    first_name, last_name = get_valid_name()
+    validate_address()
+    validate_postcode()
 
 
-# get_valid_number()
-# first_name, last_name = get_valid_name()
-
-validate_address()
-
-
-# get_user_name()
-# main()
+get_user_name()
+main()
