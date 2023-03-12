@@ -135,7 +135,7 @@ def get_valid_name():
     return capitalized_first_name, capitalized_last_name
 
 
-def address_topline():
+def firstline_address():
     """
     Request input from user, requesting entry of first line of address.
     Use Regex pattern to validate input.  The pattern allows a match using
@@ -145,7 +145,7 @@ def address_topline():
     It's not perfect, but sufficient to avoid complexity.
     Loop until input is valid.
     """
-    # The Regex pattern for this code is from the StackOverflow site, here:
+    # RegEx pattern worked out, using: https://regexr.com/
 
     pattern = re.compile(
         r"^(?:flat)?\s*\d*[,_]?\s*\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*"
@@ -153,10 +153,12 @@ def address_topline():
     while True:
         address = input("enter first line of address: \n")
         if pattern.match(address):
-            print("Pass")
+            print(address.title())
             break
         else:
             print("Fail")
+
+    return address.title()
 
     # def main():
     # """
@@ -167,7 +169,8 @@ def address_topline():
 # get_valid_number()
 # first_name, last_name = get_valid_name()
 
-address_topline()
+firstline_address()
+
 
 # get_user_name()
 # main()
