@@ -156,7 +156,10 @@ def firstline_address():
             print(address.title())
             break
         else:
-            print("Fail")
+            print(
+                f"{address} is not a valid address.  Please enter a valid"
+                "first line of address"
+            )
 
     return address.title()
 
