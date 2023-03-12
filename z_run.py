@@ -135,7 +135,7 @@ def get_valid_name():
     return capitalized_first_name, capitalized_last_name
 
 
-def firstline_address():
+def validate_address():
     """
     Request input from user, requesting entry of first line of address.
     Use Regex pattern to validate input.  The pattern allows a match using
@@ -163,16 +163,20 @@ def firstline_address():
 
     return address.title()
 
-    # def main():
-    # """
-    # Runs main functions
-    # """
+
+# def validate_postcode():
+
+
+# def main():
+# """
+# Runs main functions
+# """
 
 
 # get_valid_number()
 # first_name, last_name = get_valid_name()
 
-firstline_address()
+validate_address()
 
 
 # get_user_name()
