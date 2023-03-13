@@ -101,7 +101,8 @@ def get_valid_name():
     Both requests will loop until valid input is submitted.
     """
     pattern = re.compile(
-        r"^[A-Za-z][A-Za-z'-]+[a-z](,? [A-Z][A-Za-z'-]+[a-z])*$"
+        # r"^[A-Za-z][A-Za-z'-]+[a-z](,? [A-Z][A-Za-z'-]+[a-z])*$"
+        r"^[A-Za-z]{2}([A-Za-z'-]+[a-z])?(,? [A-Z][A-Za-z'-]+[a-z])*$"
     )
     # The Regex pattern for this code is from the StackOverflow site, here:
     # https://stackoverflow.com/questions/39895282/improving-the-below-regex-
@@ -195,10 +196,12 @@ def cake_order():
     Requests input from user, for cake customer wishes to order
     """
     print("Cakes available to order: \n")
-    print("New Baby Girl, cost £35.00")
     print("New Baby Boy, cost £35.00")
-    print("18th Birthday, cost £35.00")
-    print("Wedding, £70 \n")
+    print("New Baby Girl, cost £35.00")
+    print("Wedding, £70")
+    print("18th Birthday, cost £35.00 \n")
+
+    print("")
 
     cakes = {"girl": 35, "boy": 35, "18": 35, "wedding": 70}
 
@@ -213,16 +216,6 @@ def cake_order():
             print("Invalid input, please choose a valid cake.")
 
     return cost, cake_type, order_date
-
-
-def customer_details():
-    """
-    Requests input from user, to collect customer's name and phone number.
-    """
-    name = input("What is the customer's name? ")
-    num = input("What is the customer's phone number? ")
-
-    return name, num
 
 
 def write_to_csv(name, num, cost, cake_type, order_date):
@@ -243,54 +236,13 @@ def main():
     """
     Runs main functions
     """
-    name, num = customer_details()
-    cost, cake_type, order_date = cake_order()
-    write_to_csv(name, num, cost, cake_type, order_date)
-    print("Thank you for using our cake ordering system.")
-
-
-def cake_order():
-    """
-    Requests input from user, for cake customer wishes to order
-    """
-    print("Cakes available to order: \n")
-    print("New Baby Girl, cost £35.00")
-    print("New Baby Boy, cost £35.00")
-    print("18th Birthday, cost £35.00")
-    print("Wedding, £70 \n")
-
-    cakes = {"girl": 35, "boy": 35, "18": 35, "wedding": 70}
-
-    while True:
-        cake_choice = input("What type of cake does the customer want? \n")
-        if cake_choice in cakes:
-            cost = cakes[cake_choice]
-            cake_type = cake_choice.capitalize()
-            order_date = date.today().strftime("%d-%m-%Y")
-            return order_date
-            break
-    else:
-        print("Invalid input, please choose a valid cake.")
-
-    df = pd.read_csv("cakes.csv", dtype={"Phone number": str})
-    df.loc[df["Phone number"] == num, "Cake type"] = cake_type
-    df.loc[df["Phone number"] == num, "Order date"] = order_date
-    df.loc[df["Phone number"] == num, "Cost"] = cost
-    df.to_csv("cakes.csv", index=False)
-
-    print("Order details recorded. \n \n")
-
-
-def main():
-    """
-    Runs main functions
-    """
 
     get_valid_number()
-    first_name, last_name = get_valid_name()
+    get_valid_name()
     validate_address()
     validate_postcode()
-    cake_order_details = cake_order()
+    cake_order()
+    # write_to_csv()
 
 
 get_user_name()  # Call the get_user_function

@@ -151,7 +151,12 @@ def new_customer_details(num):
 
 def cake_order(num):
     """
-    Requests input from user, for cake customer wishes to order
+    Print to screen cakes available and corresponding price, using the
+    dictionary called "cakes", using the tuypes of cake as the key and
+    the prices as the value.
+    Print cakes available to the screen and request user to input cake chosen.
+    of cake.
+    Request user input for choice of cake.
     """
     print("Cakes available to order: \n")
     print("New Baby Girl, cost £35.00")
@@ -201,7 +206,7 @@ def main():
     cake_order(num)
 
 
-# username = user_name_terminal()
+username = user_name_terminal()
 """
 Function called outside main function, so that it only runs once, upon
 starting the program.
