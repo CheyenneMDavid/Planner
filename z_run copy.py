@@ -1,4 +1,3 @@
-from datetime import date
 import re
 import pandas as pd
 import gspread
@@ -15,22 +14,15 @@ CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("CakesRUs")
-
-
 orders = SHEET.worksheet("orders")
-
 data = orders.get_all_values()
-
 # print(data)
-
 df = pd.read_csv("cakes.csv")
-
 # print(df)
-
 """
 Opening screen of the terminal greets user with the "Cakes RUs"
 company name.
-# """
+"""
 
 print("                ===================================\n")
 print("                      Welcome to Cakes R Us \n")
@@ -52,7 +44,6 @@ def get_user_name():
     print("Spaces and special characters are not allowed.\n")
     while True:
         username = input("Enter your username: \n")
-
         if not username.isalpha() or " " in username:
             print(f"{username} is not a valid username.")
             print(
@@ -78,8 +69,6 @@ def get_valid_number():
         r"((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"
     )
 
-    num = ""
-
     while True:
         num = input("Please enter a valid UK phone number: \n")
         if pattern.match(num):
@@ -91,7 +80,7 @@ def get_valid_number():
 
 def get_valid_name():
     """
-    Same function validates both first name and last name.
+    Same functionvalidates both first name and last name.
     Requests user input of name (first or last) validates using RegEx string
     which allows for uppercase, lowercase, hyphens and apostrophes.
     Names are split at hyphens and apostrophes, the individual names are
@@ -111,7 +100,6 @@ def get_valid_name():
         "When entering customer's name, hyphens and apostrophes are allowed,"
         "but spaces are not. \n"
     )
-
     while True:
         first_name = input("Please enter customer's first name: \n")
         if pattern.match(first_name):
@@ -122,7 +110,6 @@ def get_valid_name():
             break
         else:
             print(f"{first_name} is NOT a valid first name")
-
     while True:
         last_name = input("Please enter customer's last name: \n")
         if pattern.match(last_name):
@@ -130,11 +117,9 @@ def get_valid_name():
             parts = [part.capitalize() for part in parts]
             capitalized_last_name = "'".join(parts)
             print(capitalized_last_name)
-
             break
         else:
             print(f"{last_name} is NOT a valid last name")
-
     return capitalized_first_name, capitalized_last_name
 
 
@@ -149,7 +134,6 @@ def validate_address():
     Loop until input is valid.
     """
     # RegEx pattern worked out, using: https://regexr.com/
-
     pattern = re.compile(
         r"^(?:flat)?\s*\d*[,_]?\s*\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*"
     )
@@ -163,122 +147,23 @@ def validate_address():
                 f"{address} is not a valid address.  Please enter a valid"
                 "first line of address"
             )
-
     return address.title()
 
 
 def validate_postcode():
-
     """
     Request user input for postcode.  Validation by Regex pattern
     Loop request till input is valid
     """
     pattern = re.compile(r"^[A-Za-z]{1,2}\d{1,2}[A-Za-z]?\s?\d[A-Za-z]{2}$")
-
     while True:
         postcode = input("Please enter a valid postcode \n")
         if pattern.match(postcode):
             print(postcode.upper())
-
             break
         else:
             print(f"{postcode} is an invalid format.")
-
     return postcode.upper()
-
-
-print("\n")
-
-
-def cake_order():
-    """
-    Requests input from user, for cake customer wishes to order
-    """
-    print("Cakes available to order: \n")
-    print("New Baby Girl, cost £35.00")
-    print("New Baby Boy, cost £35.00")
-    print("18th Birthday, cost £35.00")
-    print("Wedding, £70 \n")
-
-    cakes = {"girl": 35, "boy": 35, "18": 35, "wedding": 70}
-
-    while True:
-        cake_choice = input("What type of cake does the customer want? \n")
-        if cake_choice in cakes:
-            cost = cakes[cake_choice]
-            cake_type = cake_choice.capitalize()
-            order_date = date.today().strftime("%d-%m-%Y")
-            break
-        else:
-            print("Invalid input, please choose a valid cake.")
-
-    return cost, cake_type, order_date
-
-
-def customer_details():
-    """
-    Requests input from user, to collect customer's name and phone number.
-    """
-    name = input("What is the customer's name? ")
-    num = input("What is the customer's phone number? ")
-
-    return name, num
-
-
-def write_to_csv(name, num, cost, cake_type, order_date):
-    """
-    Writes the customer details and order details to a CSV file.
-    """
-    df = pd.read_csv("cakes.csv", dtype={"Phone number": str})
-    df.loc[df["Phone number"] == num, "Name"] = name
-    df.loc[df["Phone number"] == num, "Cake type"] = cake_type
-    df.loc[df["Phone number"] == num, "Order date"] = order_date
-    df.loc[df["Phone number"] == num, "Cost"] = cost
-    df.to_csv("cakes.csv", index=False)
-
-    print("Order details recorded. \n \n")
-
-
-def main():
-    """
-    Runs main functions
-    """
-    name, num = customer_details()
-    cost, cake_type, order_date = cake_order()
-    write_to_csv(name, num, cost, cake_type, order_date)
-    print("Thank you for using our cake ordering system.")
-
-
-def cake_order():
-    """
-    Requests input from user, for cake customer wishes to order
-    """
-    print("Cakes available to order: \n")
-    print("New Baby Girl, cost £35.00")
-    print("New Baby Boy, cost £35.00")
-    print("18th Birthday, cost £35.00")
-    print("Wedding, £70 \n")
-
-    cakes = {"girl": 35, "boy": 35, "18": 35, "wedding": 70}
-
-    while True:
-        cake_choice = input("What type of cake does the customer want? \n")
-        if cake_choice in cakes:
-            cost = cakes[cake_choice]
-            cake_type = cake_choice.capitalize()
-            order_date = date.today().strftime("%d-%m-%Y")
-            return order_date
-            break
-    else:
-        print("Invalid input, please choose a valid cake.")
-
-    df = pd.read_csv("cakes.csv", dtype={"Phone number": str})
-    df.loc[df["Phone number"] == num, "Cake type"] = cake_type
-    df.loc[df["Phone number"] == num, "Order date"] = order_date
-    df.loc[df["Phone number"] == num, "Cost"] = cost
-    df.to_csv("cakes.csv", index=False)
-
-    print("Order details recorded. \n \n")
 
 
 def main():
@@ -290,9 +175,7 @@ def main():
     first_name, last_name = get_valid_name()
     validate_address()
     validate_postcode()
-    cake_order_details = cake_order()
 
 
-get_user_name()  # Call the get_user_function
-
-main()  # Call the main function
+get_user_name()
+main()
